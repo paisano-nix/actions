@@ -5,8 +5,8 @@
 }: let
   contextFreeDrv = target: lib.unsafeDiscardStringContext target.drvPath;
 
-  build = system: target:
-    mkCommand system {
+  build = currentSystem: target:
+    mkCommand currentSystem {
       name = "build";
       description = "build artifact";
       command = ''
@@ -45,12 +45,12 @@
         '';
     };
 
-  run = system: target: let
+  run = currentSystem: target: let
     programName =
       target.meta.mainProgram
       or (lib.getName target);
   in
-    mkCommand system {
+    mkCommand currentSystem {
       name = "run";
       description = "run artifact";
       # this is the exact sequence mentioned by the `nix run` docs

@@ -1,8 +1,8 @@
 {nixpkgs}: let
-  mkCommand = system: args:
+  mkCommand = currentSystem: args:
     args
     // {
-      command = (nixpkgs.legacyPackages.${system}.writeShellScript "${args.name}" args.command).overrideAttrs (self: {
+      command = (nixpkgs.legacyPackages.${currentSystem}.writeShellScript "${args.name}" args.command).overrideAttrs (self: {
         passthru =
           self.passthru
           or {}
